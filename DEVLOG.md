@@ -19,12 +19,12 @@ I expect to implement the preroute_distance function and the find optimal route 
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [5/13]: [Parts 1-2]
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+At first, I thought that during implementation Dijkstra's could be run from spawn and those distances would be able to be used for anything. What I realized during implementation was that the next decision depends on distances from that relic and not from spawn, so it wouldn't help you with the order decision.
 
 ---
 
