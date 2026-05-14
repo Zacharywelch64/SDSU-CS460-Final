@@ -2,8 +2,8 @@
 CS 460 – Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Zachary Welch
+Student ID:   827470079
 
 INSTRUCTIONS
 ------------
@@ -29,12 +29,14 @@ def explain_problem():
     Returns
     -------
     str
-        Your Part 1 README answers, written as a string.
+        "Your Part 1 README answers, written as a string."
         Must match what you wrote in README Part 1.
-
-    TODO
     """
-    return "TODO"
+    return (
+    "A single path run ignores relic chambers and the order where relics are collected.\n"
+    "The order of visiting the chambers.\n"
+    "The total cost depends on the visitation sequence, making it a ordering problem.\n"
+    )
 
 
 # =============================================================================
@@ -42,21 +44,10 @@ def explain_problem():
 # =============================================================================
 
 def select_sources(spawn, relics, exit_node):
-    """
-    Parameters
-    ----------
-    spawn : node
-    relics : list[node]
-    exit_node : node
-
-    Returns
-    -------
-    list[node]
-        No duplicates. Order does not matter.
-
-    TODO
-    """
-    pass
+    sources = {spawn, exit_node}
+    for r in relics:
+        sources.add(r)
+    return list(sources)
 
 
 def run_dijkstra(graph, source):
@@ -72,10 +63,20 @@ def run_dijkstra(graph, source):
     dict[node, float]
         Minimum cost from source to every node in graph.
         Unreachable nodes map to float('inf').
-
-    TODO
     """
-    pass
+    dist = {node: float('inf') for node in graph}
+    dist[source] = 0
+    pq = [(0, source)]
+    while pq:
+        current_dist, u = heapq.heappop(pq)
+        if current_dist > dist[u]:
+            continue
+        for v, cost in graph.get(u, []):
+            new_dist = current_dist + cost
+            if new_dist < dist[v]:
+                dist[v] = new_dist
+                heapq.heappush(pq, (new_dist, v))
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -90,12 +91,14 @@ def precompute_distances(graph, spawn, relics, exit_node):
     Returns
     -------
     dict[node, dict[node, float]]
-        Nested structure supporting dist_table[u][v] lookups
-        for every source u your design requires.
-
-    TODO
+        Nested structure supporting dist_table[u][v] lookups for every source u
+        your design requires.
     """
-    pass
+    sources = select_sources(spawn, relics, exit_node)
+    dist_table = {}
+    for src in sources:
+        dist_table[src] = run_dijkstra(graph, src)
+    return dist_table
 
 
 # =============================================================================
