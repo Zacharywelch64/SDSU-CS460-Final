@@ -113,9 +113,12 @@ def dijkstra_invariant_check():
         Your Part 3 README answers, written as a string.
         Must match what you wrote in README Part 3.
 
-    TODO
     """
-    return "TODO"
+    return (
+    "The source has distance 0, so its always correct there.\n"
+    "All edge weights are nonnegative, so alternative paths can't produce a smaller value in a non finalized node.\n"
+    "All nodes are finalized, so every stored distance is true.\n" 
+    )
 
 
 # =============================================================================
@@ -129,10 +132,16 @@ def explain_search():
     str
         Your Part 4 README answers, written as a string.
         Must match what you wrote in README Part 4.
-
-    TODO
     """
-    return "TODO"
+    return (
+    "**The failure mode:** Greedy selection \n"
+    "**Counter-example setup:** Visiting one relic might make the other relics harder to get to\n"
+    "**What greedy picks:** Relic with the smallest travel cost\n" 
+    "**What optimal picks:** Whatever pathway reduces present and future fuel costs the most\n"
+    "**Why greedy loses:** Greedys current choices could undermine its overall cost.\n" 
+    "The algorithm must explore different orders of how to visit relics.\n" 
+    )
+
 
 
 # =============================================================================

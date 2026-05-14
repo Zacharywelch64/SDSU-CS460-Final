@@ -17,14 +17,13 @@
 > per question. Each bullet should be 1-2 sentences max.
 
 - **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+  A single path run ignores relic chambers and the order where relics are collected.
 
 - **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+  The order of visiting the chambers.
 
 - **Why this requires a search over orders (one sentence):**
-  _Your answer here._
-
+  The total cost depends on the visitation sequence, making it a ordering problem.
 ---
 
 ## Part 2: Precomputation Design
@@ -35,8 +34,9 @@
 
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| spawn| We need to calculate the distance from the starting location to relics |
+| relic node | We need to calculate the distance from one relic node to others |
+| exit | Running it last just to make sure
 
 ### Part 2b: Distance Storage
 
@@ -44,20 +44,20 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | dist_table |
+| What the keys represent | Outer represents source node where as inner represents destination |
+| What the values represent | Fuel cost from source to destination |
+| Lookup time complexity | O(1) |
+| Why O(1) lookup is possible | Hash table gives constant time access |
 
 ### Part 2c: Precomputation Complexity
 
 > State the total complexity and show the arithmetic. Two to three lines max.
 
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** k+2
+- **Cost per run:** O(m log n)
+- **Total complexity:** O((k+2)m log n)
+- **Justification (one line):** We run Dijkstra once from spawn and once from each relic , and once from the exit
 
 ---
 
@@ -72,29 +72,29 @@
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+  The stored distance is the true shortest path from the source
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+  The stored distance is the shortest discovered path for the nodes that are finalized
 
 ### Part 3b: Why Each Phase Holds
 
 > One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+  The source has distance 0, so its always correct there.
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+  All edge weights are nonnegative, so alternative paths can't produce a smaller value in a non finalized node.
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+  All nodes are finalized, so every stored distance is true.
 
 ### Part 3c: Why This Matters for the Route Planner
 
 > One sentence connecting correct distances to correct routing decisions.
 
-_Your answer here._
+If the route planner knows the distances are in fact correct it will compare accurate fuel costs when chosing relics. 
 
 ---
 
@@ -105,17 +105,17 @@ _Your answer here._
 > State the failure mode. Then give a concrete counter-example using specific node names
 > or costs (you may use the illustration example from the spec). Three to five bullets.
 
-- **The failure mode:** _Your answer here._
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- **The failure mode:** Greedy selection
+- **Counter-example setup:** Visiting one relic might make the other relics harder to get to
+- **What greedy picks:** Relic with the smallest travel cost
+- **What optimal picks:** Whatever pathway reduces present and future fuel costs the most
+- **Why greedy loses:** Greedys current choices could undermine its overall cost.
 
 ### What the Algorithm Must Explore
 
 > One bullet. Must use the word "order."
 
-- _Your answer here._
+- The algorithm must explore different orders of how to visit relics.
 
 ---
 
