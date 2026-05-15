@@ -28,18 +28,18 @@ At first, I thought that during implementation Dijkstra's could be run from spaw
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5/13]: [Parts 3-6]
 
-_Your entry here._
+Parts 3 through six implemented through a lengthy struggle with pruning. I introduced a best so far container and added a lower bound using the cheapest distance in part 6.
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – [5/13]: []
 
 > Required. Written after your implementation is complete. Describe what you would
 > change or improve given more time.
 
-_Your entry here._
+Looking back, I would improve the lower bound estimation. Currently, the bound only considers the minimum distance to the next relic. I would also rewrite the search logic to separate lower bound computation into its own helper function for readability.
 
 ---
 
